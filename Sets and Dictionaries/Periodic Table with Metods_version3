@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ConsoleApp66
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int lines  = int.Parse(Console.ReadLine());
+
+            SortedSet<string> elements = new SortedSet<string>();
+
+            FillSet(elements, lines);
+
+
+            Console.WriteLine(string.Join(" ", elements ));
+            
+
+        }
+
+         static SortedSet<string>  FillSet(SortedSet<string> elements, int lines)
+        {
+            for (int  line = 0; line < lines; line++)
+            {
+                string[] compaunts = Console.ReadLine().Split().ToArray();
+                for (int element = 0; element < compaunts.Length; element++)
+                {
+                    elements.Add(compaunts[element]);
+                }
+
+            }
+
+            return elements;
+        }
+    }
+}
