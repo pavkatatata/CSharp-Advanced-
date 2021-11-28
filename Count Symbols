@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ConsoleApp66
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            string input = Console.ReadLine();
+            SortedDictionary<char, int> symbols = new SortedDictionary<char, int>();
+
+            FillDictionary(symbols, input);
+            PrintResult(symbols);
+            
+
+        }
+
+        static void PrintResult(SortedDictionary<char, int> symbols)
+        {
+            foreach (KeyValuePair<char, int> kvp in symbols)
+            {
+                Console.WriteLine($"{kvp.Key}: -> {kvp.Value} time/s");
+            }
+            
+        }
+
+        static SortedDictionary<char, int> FillDictionary(SortedDictionary<char, int> symbols, string input)
+        {
+            foreach (char sybol in input)
+            {
+                if (symbols.ContainsKey(sybol) == false)
+                {
+                    symbols.Add(sybol, 0);
+                }
+                symbols[sybol]++;
+
+            }
+
+            return symbols;
+
+        }
+    }
+}
