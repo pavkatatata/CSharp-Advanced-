@@ -1,0 +1,62 @@
+using System;
+using System.Linq;
+
+namespace ConsoleApp71
+{
+    public delegate int Calculate(int x, int y);
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Calculate sum = (x, y) => x + y;
+            Calculate product = (x, y) => x * y;
+
+            Console.WriteLine(sum(5, 6));
+            Console.WriteLine(product(5, 5));
+            UseDelegate(sum);
+            UseDelegate(product);
+            Console.WriteLine("......................");
+            DoWork(() => 11);
+            DoWork(() =>  33 + 36);
+            DoWork(() => int.Parse("9"));
+
+            Func<int> somFunc = () => 32;
+            somFunc = () => 12;
+            somFunc = () => 33 + 36;
+             
+
+            Func<int, int, string> a = Sum;
+            var result = Sum(5, 6);
+            Console.WriteLine("....................");
+            Console.WriteLine(string.Join(" ", a));
+
+        }
+
+        public static string Sum ( int x, int y)
+        {
+            return (x + y).ToString();
+
+        }
+
+
+
+        public static void DoWork(Func<int> callFunc)
+        {
+            var result = callFunc();
+            Console.WriteLine((result));
+        }
+
+        public static void UseDelegate(Calculate calculate)
+        {
+
+            Console.WriteLine(calculate(1, 2));
+
+
+        }
+
+
+
+
+    }
+}
