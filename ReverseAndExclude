@@ -1,0 +1,27 @@
+using System;
+using System.Linq;
+
+namespace ConsoleApp72
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            var numbers = Console.ReadLine()
+                .Split()
+                .Select(int.Parse)
+                .ToArray();
+
+
+            var divisibleNumber = int.Parse(Console.ReadLine());
+
+            Predicate<int> filter = numbers => numbers % divisibleNumber != 0;
+
+            Action<int[]> printer =  number => Console.WriteLine(string.Join(" ", number.Reverse().Where(x => filter(x))));
+
+            printer(numbers);
+        }
+
+    }
+}
