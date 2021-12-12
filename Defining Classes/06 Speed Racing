@@ -1,0 +1,91 @@
+using System;
+using System.Linq;
+
+namespace _6._Speed_Racing
+{
+    class StartUp
+    {
+        static void Main(string[] args)
+        {
+            var n = int.Parse(Console.ReadLine());
+            var cars = new Car[n];
+            for (int i = 0; i < n; i++)
+            {
+
+                var input = Console.ReadLine();
+                var tookens = input.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
+                var model = tookens[0];
+                var fuelAmount = decimal.Parse(tookens[1]);
+                var fuelCost = decimal.Parse(tookens[2]);
+
+                cars[i] = new Car(model, fuelAmount, fuelCost);
+
+
+            }
+
+            while (true)
+            {
+                var input = Console.ReadLine();
+                var tokens = input.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
+                if (input == "End")
+                {
+                    break;
+                }
+                var model = tokens[1];
+                decimal distance = decimal.Parse(tokens[2]);
+                cars.Where(c => c.Model == model).ToList().ForEach(c => c.Drive(distance));
+
+            }
+
+            foreach ( Car car in cars)
+            {
+                Console.WriteLine($"{car.Model} {car.Fuel:f2} {car.Traveled}");
+            }
+
+
+        }
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace _6._Speed_Racing
+{
+    public class Car
+    {
+
+        public string Model { get; set; }
+        public decimal Fuel { get; set; }
+        public decimal Comsumation { get; set; }
+        public decimal Traveled { get; set; }
+
+        public Car(string model, decimal fuel, decimal consumtion)
+        {
+            Model = model;
+            Fuel = fuel;
+            Comsumation = consumtion;
+            Traveled = 0;
+
+        }
+
+        public void Drive(decimal distance)
+        {
+            decimal fuelNeed = distance * Comsumation;
+            if (Fuel >= fuelNeed)
+            {
+                Fuel -= fuelNeed;
+                Traveled += distance;
+            }
+            else
+            {
+                Console.WriteLine("Insufficient fuel for the drive");
+            }
+
+        }
+
+
+    }
+}
+
