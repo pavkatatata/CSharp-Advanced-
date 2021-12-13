@@ -1,0 +1,156 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace _0._7_Raw_Data
+{
+    public class StartUp
+    {
+        static void Main(string[] args)
+        {
+
+            var numberOfCars = int.Parse(Console.ReadLine());
+
+            var cars = new List<Car>();
+
+            for (int i = 0; i < numberOfCars; i++)
+            {
+                var info = Console.ReadLine().Split();
+                var engine = new Engine(int.Parse(info[1]), int.Parse(info[2]));
+                var cargo = new Cargo(int.Parse(info[3]), (info[4]));
+
+                var tierrs = new Tier[]
+                {
+                    new Tier (double.Parse(info[5]), int.Parse(info[6])),
+                    new Tier (double.Parse(info[7]), int.Parse(info[8])),
+                    new Tier (double.Parse(info[9]), int.Parse(info[10])),
+                    new Tier (double.Parse(info[11]), int.Parse(info[12]))
+                
+                };
+
+                cars.Add(new Car(info[0], engine, cargo, tierrs));
+            }
+
+
+            string type = Console.ReadLine();
+
+            var filterd = new List<Car>();
+
+            if (type == "fragile")
+            {
+                filterd = cars.Where(c => c.Cargo.Type == "fragile" && c.Tier.Any(t => t.Pressure < 1))
+                .ToList();
+            }
+            else
+            {
+                filterd = cars.Where( c => c.Cargo.Type == "flamable" && c.Engine.Power > 250).ToList();
+            }
+           
+            foreach ( Car car in filterd)
+            {
+                Console.WriteLine(car.Model);
+            }
+        }
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace _0._7_Raw_Data
+{
+    public class Car
+    {
+        public string Model { get; set; }
+
+        public Engine Engine { get; set; }
+
+        public Cargo Cargo { get; set; }
+
+        public Tier[] Tier { get; set; }
+
+
+    public Car(string model, Engine engine, Cargo cargo, Tier[] tiers)
+        {
+            Model = model;
+            Engine = engine;
+            Cargo = cargo;
+            Tier = tiers;
+        }
+
+       
+
+
+
+
+
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace _0._7_Raw_Data
+{
+    public class Cargo
+    {
+
+        public int Weight { get; set; }
+
+        public string Type { get; set; }
+
+        public Cargo(int cargoWeight, string cargoType)
+        {
+            Weight = cargoWeight;
+            Type = cargoType;
+        }
+
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace _0._7_Raw_Data
+{
+    public class Engine
+    {
+        public int Speed { get; set; }
+        public int Power { get; set; }
+
+        public Engine(int engineSpeed, int enginePower)
+        {
+            Speed = engineSpeed;
+            Power = enginePower;
+        }
+
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace _0._7_Raw_Data
+{
+    public class Tier
+    {
+        public double Pressure { get; set; }
+        public int Age { get; set; }
+
+        public Tier(double tierPresure, int tierAge)
+        {
+            Pressure = tierPresure;
+            Age = tierAge;
+
+        } 
+
+
+
+    }
+}
+
+
