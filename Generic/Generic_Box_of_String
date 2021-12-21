@@ -1,0 +1,46 @@
+using System;
+
+namespace Generic_Box_of_String
+{
+    class StartUp
+    {
+        static void Main(string[] args)
+        {
+
+            var numberOfLine = int.Parse(Console.ReadLine());
+            for (int i = 0; i < numberOfLine; i++)
+            {
+                var input = Console.ReadLine();
+                var box = new Box<string>(input);
+
+                Console.WriteLine(box);
+
+            }
+
+
+
+
+        }
+    }
+}
+
+namespace Generic_Box_of_String
+{
+    public class Box<T>
+    {
+        public Box(T element)
+        {
+            Element = element;
+
+        }
+        public T Element { get; }
+
+        public override string ToString()
+        {
+            return $"{typeof(T)}: {Element}";
+        }
+
+
+
+    }
+}
