@@ -13,7 +13,6 @@ namespace Generic_Box_of_String
 
             var nameAndBeeer = Console.ReadLine().Split();   
             var name = nameAndBeeer[0];
-
             var numberOfLiters = int.Parse(nameAndBeeer[1]);
 
             var numbersInput = Console.ReadLine().Split();
