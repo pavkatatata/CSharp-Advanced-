@@ -1,0 +1,183 @@
+namespace CocktailParty
+{
+    using System;
+
+    public class StartUp
+    {
+        public static void Main(string[] args)
+        {
+
+            //Sample Code Usage:
+
+            //Initialize Cocktail
+            Cocktail cocktail = new Cocktail("Pina Colada", 3, 10);
+
+            //Initialize Ingredient
+            Ingredient rum = new Ingredient("Rum", 2, 3);
+
+            //Print rum
+            Console.WriteLine(rum.ToString());
+
+            //Ingredient: Rum
+            //Quantity: 3
+            //Alcohol: 2
+
+            //Add rum
+            cocktail.Add(rum);
+
+            //Remove rum
+            Console.WriteLine(cocktail.Remove("Rum")); // true
+
+            Ingredient vodka = new Ingredient("Vodka", 2, 5);
+            Ingredient milk = new Ingredient("Milk", 0, 5);
+
+            //Add ingredients
+            cocktail.Add(vodka);
+            cocktail.Add(milk);
+
+            //GetMostAlcoholicIngredient
+            Console.WriteLine($"{cocktail.MaxAlcoholLevel}");
+            //Ingredient: Vodka
+            //Quantity: 5
+            //Alcohol: 2
+
+            //CurrentAlcoholLevel
+            Console.WriteLine(cocktail.CurrentAlcoholLevel);
+            //2
+
+            //Print Cocktail report
+            Console.WriteLine(cocktail.Report());
+
+            //Cocktail: Pina Colada - Current Alcohol Level: 2
+            //Ingredient: Vokda
+            //Quantity: 5
+            //Alcohol: 2
+            //Ingredient: Milk
+            //Quantity: 5
+            //Alcohol: 0
+
+        }
+    }
+}
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace CocktailParty
+{
+    internal class Cocktail
+    {
+        private List<Ingredient> inredients;
+
+        public Cocktail(string name, int capacity, int maxAlcohol)
+        {
+            inredients = new List<Ingredient>();
+            Name = name;
+            Capacity = capacity;
+            MaxAlcoholLevel = maxAlcohol;
+
+        }
+
+
+        public string Name { get; set; }
+        public int Capacity { get; set; }
+        public int MaxAlcoholLevel { get; set; }
+
+
+        public int CurrentAlcoholLevel => inredients.Sum(alcohol => alcohol.Alcohol);
+        
+
+        public void Add(Ingredient ingredient)
+        {
+            bool isIngredient = false;
+            foreach (Ingredient element in inredients)
+            {
+                if (element.Name == ingredient.Name)
+                {
+                    isIngredient = true;
+                }
+            }
+            if (!isIngredient)
+            {
+                if (inredients.Count < Capacity && CurrentAlcoholLevel <= MaxAlcoholLevel)
+                {
+                    inredients.Add(ingredient);
+                }
+            }
+        }
+
+        public bool Remove(string name)
+        {
+            bool isIngredient = false;
+            foreach (Ingredient ingredient in inredients)
+            {
+                if (ingredient.Name == name)
+                {
+                    isIngredient = true;
+                }
+                if (isIngredient)
+                {
+                    inredients.Remove(inredients.FirstOrDefault(inredients => inredients.Name == name));
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
+        public Ingredient FindIngredient(string name)
+        {
+            return inredients.FirstOrDefault(n => n.Name == name);
+        }
+
+        public Ingredient GetMostAlcoholIngridient() => inredients.OrderByDescending(i => i.Alcohol).FirstOrDefault();
+
+
+        public string Report()
+        {
+            var result = $"Coktail: {Name} - Current Alocohol Level: {CurrentAlcoholLevel}\r\n";
+            foreach (Ingredient ingredient in inredients)
+            {
+                result += $"{ingredient.ToString()}\r\n";
+            }
+            return result.TrimEnd();
+        }
+
+
+
+    }
+}
+
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace CocktailParty
+{
+     public class Ingredient
+    {
+        public Ingredient(string name, int alcohol, int quantity)
+        {
+            Name = name;   
+            Alcohol = alcohol;
+            Quantity = quantity;   
+        }
+
+        public string Name { get; set; }
+        public int Alcohol { get; set; }
+        public int 	Quantity { get; set; }
+
+        public override string ToString()
+        {
+            return $"Ingredient: {Name}\r\n" +
+                $"Quantity: {Quantity}\r\n" +
+                $"Alcohol {Alcohol}";
+        }
+
+
+    }
+}
