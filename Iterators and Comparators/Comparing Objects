@@ -1,0 +1,103 @@
+
+using System;
+
+namespace Froggy
+{
+    public class StartUp
+    {
+        static void Main(string[] args)
+        {
+            List<Person> persons = new List<Person>();
+            while (true)
+            {
+                var tokens = Console.ReadLine().Split();
+                if (tokens[0] == "END")
+                {
+                    break;
+                }
+                persons.Add(new Person(tokens[0], int.Parse(tokens[1]), tokens[2]));
+
+            }
+
+            var index = int.Parse(Console.ReadLine()) - 1;
+
+            var equal = 0;
+            var notEqual = 0;
+
+            foreach (Person person in persons)
+            {
+                if (persons[index].CompareTo(person) == 0)
+                {
+                    equal++;
+                }
+                else
+                {
+                    notEqual++;
+                }
+            }
+
+            if (equal <= 1)
+            {
+                Console.WriteLine("No matches");
+            }
+            else
+            {
+                Console.WriteLine($"{equal} {notEqual} {persons.Count}");
+            }
+            
+        }
+
+    }
+}
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Froggy
+{
+    public class Person : IComparable<Person>
+    {
+
+        private string name;
+        private int age;
+        private string town;
+
+        public Person(string name, int age, string town)
+        {
+            this.name = name;
+            this.age = age; 
+            this.town = town;   
+        }
+
+        public string Name => name;
+        public int Age => age;
+        public string Town => town;
+
+
+
+
+        public int CompareTo(Person? other)
+        {
+            int result = Name.CompareTo(other.Name);
+
+            if (result == 0)
+            {
+                result = age.CompareTo(other.Age);
+            }
+            if (result == 0)
+            {
+                result = Town.CompareTo(other.Town);
+            }
+
+            return result;
+        }
+    }
+}
+
+
+
+
